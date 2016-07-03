@@ -15,22 +15,27 @@ class TopGames::Scraper
     end
 
     def summary
+        sleep(0.5)
         @summary ||= scrape_game_page.search("span[itemprop='description']").text.strip
     end
 
     def meta_score
+        sleep(0.5)
         @meta_score ||= scrape_game_page.search("span[itemprop='ratingValue']").text.strip
     end
 
     def developer
+        sleep(0.5)
         @developer ||= scrape_game_page.search('li.summary_detail.developer span.data').text.strip
     end
 
     def release
+        sleep(0.5)
         @release ||= scrape_game_page.search("span[itemprop='datePublished']").text.strip
     end
 
     def user_score
+        sleep(0.5)
         @user_score ||= scrape_game_page.search('a.metascore_anchor div.metascore_w.user').text.strip
     end
 
@@ -42,6 +47,6 @@ class TopGames::Scraper
     end
 
     def scrape_game_page
-        @game_page = Nokogiri::HTML(open("http://#{url}", 'User-Agent' => 'Mozilla/5.0 (Windows NT 6.0; rv:12.0) Gecko/20100101 Firefox/12.0 FirePHP/0.7.1'))
+        @game_page ||= Nokogiri::HTML(open("http://#{url}", 'User-Agent' => 'Mozilla/5.0 (Windows NT 6.0; rv:12.0) Gecko/20100101 Firefox/12.0 FirePHP/0.7.1'))
     end
 end
